@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 @Controller
+@CrossOrigin
 public class SwaggerInvokeController {
 
     private static Logger logger = LoggerFactory.getLogger(SwaggerInvokeController.class);

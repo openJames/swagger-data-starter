@@ -10,7 +10,7 @@
 
     <groupId>io.github.openJames</groupId>
     <artifactId>swagger-data-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <url>http://maven.apache.org</url>
 
@@ -55,14 +55,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>4.3.10.RELEASE</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
 
 

@@ -1,6 +1,6 @@
 package com.hh.swagger.dubbo.http;
 
-import com.hh.swagger.dubbo.config.BeansUtil;
+import com.hh.swagger.dubbo.config.BeansUtil4SwaggerContext;
 import com.hh.swagger.dubbo.util.AopTargetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,7 @@ public class ReferenceManager {
         }
         instance = new ReferenceManager();
         try {
-            ApplicationContext context1 = BeansUtil.getApplicationContext();
+            ApplicationContext context1 = BeansUtil4SwaggerContext.getApplicationContext();
 
             Class<?> aClass = Class.forName("com.hundsun.jrescloud.rpc.annotation.CloudService");
             Map<String, Object> beansWithAnnotation = context1.getBeansWithAnnotation((Class<? extends Annotation>) aClass);

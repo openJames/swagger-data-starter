@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestAController {
 
-    @RequestMapping("test")
+    @RequestMapping("swagger-testA")
     @ResponseBody
     public String test() {
         return "AA";

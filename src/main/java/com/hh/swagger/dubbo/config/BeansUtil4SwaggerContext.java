@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class BeansUtil implements ApplicationContextAware {
+public class BeansUtil4SwaggerContext implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        BeansUtil.applicationContext = applicationContext;
+        BeansUtil4SwaggerContext.applicationContext = applicationContext;
     }
 
     public static Object getBean(Class clazz) {
