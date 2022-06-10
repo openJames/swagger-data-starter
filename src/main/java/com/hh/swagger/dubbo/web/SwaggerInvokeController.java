@@ -100,7 +100,7 @@ public class SwaggerInvokeController {
         Method method = null;
         Object result;
 
-        logger.info("arrayOrJson:{}, request:{}", arrayOrJson, request.getParameterMap());
+//        logger.info("arrayOrJson:{}, request:{}", arrayOrJson, request.getParameterMap());
 
         Entry<Class<?>, Object> entry = ReferenceManager.getInstance().getRef(interfaceClass);
 

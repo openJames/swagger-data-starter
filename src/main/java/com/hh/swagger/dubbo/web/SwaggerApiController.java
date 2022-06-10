@@ -29,52 +29,52 @@ public class SwaggerApiController {
 
     public static final String DEFAULT_URL = "/api-docs";
     private static final String HAL_MEDIA_TYPE = "application/hal+json";
-    
-	@Autowired
-	private DubboServiceScanner dubboServiceScanner;
 
-	@Autowired
-	private DubboPropertyConfig dubboPropertyConfig;
+    @Autowired
+    private DubboServiceScanner dubboServiceScanner;
 
-	@Autowired
-	private SwaggerDocCache swaggerDocCache;
+    @Autowired
+    private DubboPropertyConfig dubboPropertyConfig;
 
-	private String httpContext = NON_ARRAY_FLAG;
+    @Autowired
+    private SwaggerDocCache swaggerDocCache;
 
-	private boolean enable = true;
+    private String httpContext = NON_ARRAY_FLAG;
 
-	@RequestMapping(value = DEFAULT_URL, 
-	        method = RequestMethod.GET, 
-	        produces = {"application/json; charset=utf-8", HAL_MEDIA_TYPE})
-	@ResponseBody
-	public ResponseEntity<Json> getApiList() throws JsonProcessingException {
+    private boolean enable = true;
 
-		if (!enable){
-			return new ResponseEntity<Json>(HttpStatus.NOT_FOUND);
-		}
+    @RequestMapping(value = DEFAULT_URL,
+            method = RequestMethod.GET,
+            produces = {"application/json; charset=utf-8", HAL_MEDIA_TYPE})
+    @ResponseBody
+    public ResponseEntity<Json> getApiList() throws JsonProcessingException {
+
+        if (!enable) {
+            return new ResponseEntity<Json>(HttpStatus.NOT_FOUND);
+        }
 
 //        Swagger swagger = new Swagger();
 
-		Swagger swagger = swaggerDocCache.getSwagger();
-		if (null != swagger){
-			return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
-		}else{
-			swagger = new Swagger();
-		}
+        Swagger swagger = swaggerDocCache.getSwagger();
+        if (null != swagger) {
+            return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
+        } else {
+            swagger = new Swagger();
+        }
 
-		final SwaggerConfig configurator = dubboPropertyConfig;
+        final SwaggerConfig configurator = dubboPropertyConfig;
 
 
-		Map<Class<?>, Object> interfaceMapRef = dubboServiceScanner.interfaceMapRef();
-		if (null != interfaceMapRef) {
-			Reader.read(swagger, interfaceMapRef, httpContext);
-		}
+        Map<Class<?>, Object> interfaceMapRef = dubboServiceScanner.interfaceMapRef();
+        if (null != interfaceMapRef) {
+            Reader.read(swagger, interfaceMapRef, httpContext);
+        }
 
         if (configurator != null) {
             configurator.configure(swagger);
         }
-		swaggerDocCache.setSwagger(swagger);
-		return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
-	}
+        swaggerDocCache.setSwagger(swagger);
+        return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
+    }
 
 }

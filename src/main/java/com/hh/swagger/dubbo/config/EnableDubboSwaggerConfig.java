@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
  * @author James
  * @since 2022-03-02 7:49
  */
-@Configuration
 @Conditional(EnableDubboSwaggerConfigCondition.class)
 @ComponentScan(basePackages = {"com.hh.swagger.dubbo.config", "com.hh.swagger.dubbo.web"})
 @Slf4j
