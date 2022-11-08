@@ -1,9 +1,12 @@
 package com.hh.swagger.dubbo.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.hh.swagger.dubbo.http.HttpMatch;
 import com.hh.swagger.dubbo.http.ReferenceManager;
 import com.hh.swagger.dubbo.reader.NameDiscover;
@@ -99,7 +102,6 @@ public class SwaggerInvokeController {
         Object ref;
         Method method = null;
         Object result;
-
 //        logger.info("arrayOrJson:{}, request:{}", arrayOrJson, request.getParameterMap());
 
         Entry<Class<?>, Object> entry = ReferenceManager.getInstance().getRef(interfaceClass);
@@ -173,6 +175,7 @@ public class SwaggerInvokeController {
             try {
                 JavaType javaType = new ObjectMapper().constructType(type);
                 ObjectMapper mapper = Json.mapper();
+                mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
                 return mapper.readValue(parameter,  javaType);
             } catch (Exception e) {
                 throw new IllegalArgumentException("The parameter value [" + parameter + "] should be json of [" + cls.getName() + "] Type.", e);
