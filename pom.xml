@@ -10,7 +10,7 @@
 
     <groupId>io.github.openJames</groupId>
     <artifactId>swagger-data-starter</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.6</version>
 
     <url>http://maven.apache.org</url>
 

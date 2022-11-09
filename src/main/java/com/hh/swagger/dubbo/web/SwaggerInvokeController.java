@@ -1,15 +1,13 @@
 package com.hh.swagger.dubbo.web;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.hh.swagger.dubbo.http.HttpMatch;
 import com.hh.swagger.dubbo.http.ReferenceManager;
 import com.hh.swagger.dubbo.reader.NameDiscover;
+import com.hh.swagger.dubbo.util.MapCamelUtil;
 import io.swagger.util.Json;
 import io.swagger.util.PrimitiveType;
 import org.slf4j.Logger;
@@ -72,10 +70,9 @@ public class SwaggerInvokeController {
                                               HttpServletResponse response) throws Exception {
         String arrayOrJson = null;
         if (!CollectionUtils.isEmpty(map)) {
-
-//            arrayOrJson = JSON.json(map);
+            Object o = MapCamelUtil.key2Camel(map);
             ObjectMapper objectMapper = new ObjectMapper();
-            arrayOrJson = objectMapper.writeValueAsString(map);
+            arrayOrJson = objectMapper.writeValueAsString(o);
         }
         return invokeDubbo(interfaceClass, methodName, arrayOrJson, request, response);
     }
@@ -89,7 +86,6 @@ public class SwaggerInvokeController {
                                               HttpServletResponse response) throws Exception {
         String arrayOrJson = null;
         if (objects != null) {
-//            arrayOrJson = JSON.json(objects);
             ObjectMapper objectMapper = new ObjectMapper();
             arrayOrJson = objectMapper.writeValueAsString(objects);
         }
@@ -175,7 +171,7 @@ public class SwaggerInvokeController {
             try {
                 JavaType javaType = new ObjectMapper().constructType(type);
                 ObjectMapper mapper = Json.mapper();
-                mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+//                mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
                 return mapper.readValue(parameter,  javaType);
             } catch (Exception e) {
                 throw new IllegalArgumentException("The parameter value [" + parameter + "] should be json of [" + cls.getName() + "] Type.", e);
