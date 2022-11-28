@@ -54,10 +54,8 @@ public class SwaggerInvokeController {
 
     @RequestMapping(value = "simple")
     @ResponseBody
-    public void invokeDubboSimple() throws Exception {
-        System.out.println("appName = " + appName);
-        System.out.println("appGroup = " + appGroup);
-        System.out.println("appVersion = " + appVersion);
+    public void invokeDubboSimple() {
+        System.out.println("appName = " + appName + " appGroup = " + appGroup + " appVersion = " + appVersion);
     }
 
 
@@ -86,8 +84,9 @@ public class SwaggerInvokeController {
                                               HttpServletResponse response) throws Exception {
         String arrayOrJson = null;
         if (objects != null) {
+            Object o = MapCamelUtil.key2Camel(objects);
             ObjectMapper objectMapper = new ObjectMapper();
-            arrayOrJson = objectMapper.writeValueAsString(objects);
+            arrayOrJson = objectMapper.writeValueAsString(o);
         }
         return invokeDubbo(interfaceClass, methodName, arrayOrJson, request, response);
     }

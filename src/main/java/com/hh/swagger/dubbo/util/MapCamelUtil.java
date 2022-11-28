@@ -1,9 +1,6 @@
 package com.hh.swagger.dubbo.util;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * desc:
@@ -31,11 +28,23 @@ public class MapCamelUtil {
     // 判断可以优化 用等于数组或者 list来优化
     private static List<Object> listOrArrayDeal(Object v) {
         ArrayList<Object> objects = new ArrayList<>();
+        HashSet keySet = new HashSet();
+        List valueAll = new ArrayList();
         ((List<?>) v).forEach(
                 v1 ->{
-                    objects.add(key2Camel(v1));
+                    Object e = key2Camel(v1);
+                    if (e instanceof Map) {
+                        Set<?> keySet1 = ((Map<?, ?>) e).keySet();
+                        Collection<?> values = ((Map<?, ?>) e).values();
+                        keySet.addAll(keySet1);
+                        valueAll.addAll(values);
+                    }
+                    objects.add(e);
                 }
         );
+        if (keySet.size() == 1) {
+            return valueAll;
+        }
         return objects;
     }
 
